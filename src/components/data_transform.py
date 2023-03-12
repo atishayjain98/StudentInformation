@@ -1,5 +1,6 @@
 # Importing Libraries 
 import sys
+sys.path.append(".")
 import os
 
 import numpy as np
@@ -28,13 +29,13 @@ class DataTransformation:
         This function is responsible for creating Data Transformation object
         '''
         try:
-            numerical_columns = ["writing_score", "reading_score"]
+            numerical_columns = ["writing score", "reading score"]
             categorical_columns = [
                 "gender",
                 "race/ethnicity",
-                "parental_level_of_education",
+                "parental level of education",
                 "lunch",
-                "test_preparation_course",
+                "test preparation course",
             ]
             
             logging.info("Categorical and Numerical Columns seperated.")
@@ -43,8 +44,8 @@ class DataTransformation:
             
             num_pipeline = Pipeline(
                 steps=[
-                    ("Imputer", SimpleImputer(strategy='median')), # Handling missing value
-                    ("Scaler", StandardScaler()) # Standard scaling on numerical data
+                    ("Imputer", SimpleImputer(strategy = 'median')), # Handling missing value
+                    ("Scaler", StandardScaler(with_mean=False)) # Standard scaling on numerical data
                 ]
             )
             
@@ -52,9 +53,9 @@ class DataTransformation:
             
             cat_pipeline = Pipeline(
                 steps=[
-                    ("Imputer", SimpleImputer(strategy='most frequent')),
-                    ("OH_Encoding", OneHotEncoder())
-                    ("Scaler", StandardScaler())
+                    ("Imputer", SimpleImputer(strategy='most_frequent')),
+                    ("OH_Encoding", OneHotEncoder()),
+                    ("Scaler", StandardScaler(with_mean=False))
                 ]
             )
             
@@ -85,8 +86,7 @@ class DataTransformation:
             
             preprocessor_obj = self.get_data_transformer_obj()
             
-            target_col_name = "math_score"
-            numerical_columns = ["writing_score", "reading_score"]
+            target_col_name = "math score"
             
             input_feature_train_df = train_df.drop([target_col_name], axis = 1)
             target_feature_train_df = train_df[target_col_name]
